@@ -19,7 +19,7 @@ Each StrategyQA question was run under four prompt conditions, asking the model 
 | `parallelism` | Parison | Parallel phrases of equal grammatical structure |
 | `chiasmus` | Chiasmus | Mirrored/inverted structure (A-B...B-A) |
 
-**Evaluation:** Answer accuracy, faithfulness (1–5, LLM judge), blind 4-way structure classification, figure presence score.
+**Evaluation:** Answer accuracy, faithfulness (1–5, LLM judge which decides), blind 4-way structure classification (LLM-Judge needs to pick which rhetorical device is used in this prompt), figure presence score (1-5).
 
 **Hypothesis:** If rhetorical structure acts as a reasoning scaffold, structured prompting should improve faithfulness and maintain accuracy.
 
