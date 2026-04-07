@@ -3,8 +3,10 @@
 An investigation into whether constraining LLM outputs to classical rhetorical figures improves reasoning performance, whether these structures are encoded in activation space, and whether they can be causally steered.
 
 **Model:** Llama-2-7b-chat-hf  
-**Dataset:** StrategyQA (200 questions, balanced yes/no, closed-book)  
+**Dataset:** [StrategyQA](https://allenai.org/data/strategyqa) (200 questions, balanced yes/no, closed-book)  
 **Judge:** Claude Haiku (faithfulness scoring, blind structure classification, figure presence scoring)
+
+StrategyQA was chosen because each question has a binary yes/no answer that requires multi-step implicit reasoning to reach — the model cannot pattern-match to a surface answer. This makes it a clean testbed: accuracy is unambiguous, but the path to the answer requires a reasoning chain, making it sensitive to how that chain is structured. We sampled 200 questions with balanced yes/no labels to prevent majority-class shortcuts.
 
 ---
 
@@ -17,9 +19,15 @@ Each StrategyQA question was run under four prompt conditions, asking the model 
 | `baseline_cot` | — | Standard chain-of-thought |
 | `enumeratio` | Enumeratio | Explicitly numbered steps (1. 2. 3.) |
 | `parallelism` | Parison | Parallel phrases of equal grammatical structure |
-| `chiasmus` | Chiasmus | Mirrored/inverted structure (A-B...B-A) |
+| `chiasmus` | Chiasmus + Antimetabole | Mirrored/inverted structure (A-B...B-A); we hoped antimetabole (word-level inversion, e.g. "not to live to eat, but eat to live") would emerge as a natural instantiation of the chiasmus prompt, since it is the most lexically recognisable member of that family |
 
-**Evaluation:** Answer accuracy, faithfulness (1–5, LLM judge which decides), blind 4-way structure classification (LLM-Judge needs to pick which rhetorical device is used in this prompt), figure presence score (1-5).
+The four rhetorical devices span meaningfully different structural demands: **enumeratio** imposes sequential, explicit decomposition; **parison** imposes grammatical symmetry across parallel clauses; **chiasmus/antimetabole** imposes semantic inversion and mirroring. Together they test whether structure at different linguistic levels (sequential, syntactic, semantic) has different effects on reasoning.
+
+**Evaluation metrics:**
+- **Answer accuracy** — whether the final yes/no answer matches the gold label
+- **Faithfulness** (1–5) — how well the reasoning chain actually supports and leads to the stated answer, as judged by Claude Haiku. A score of 1 means the reasoning is irrelevant or contradicts the answer; 5 means the reasoning fully and logically entails the answer. This captures reasoning quality independently of whether the answer happens to be correct.
+- **Blind 4-way structure classification** — the judge is shown only the reasoning trace (no prompt) and must identify which of the four rhetorical conditions produced it. High classification accuracy means the figure is legible in the output.
+- **Figure presence score** (1–5) — how strongly the target figure is present in the output, regardless of reasoning quality.
 
 **Hypothesis:** If rhetorical structure acts as a reasoning scaffold, structured prompting should improve faithfulness and maintain accuracy.
 
@@ -27,15 +35,16 @@ Each StrategyQA question was run under four prompt conditions, asking the model 
 
 ![Part A Summary](figures/partA/partA_results_summary.png)
 
-- No condition consistently outperformed baseline on accuracy or faithfulness
-- Enumeratio produced the most structurally consistent outputs (judge correctly classified it most often)
-- Chiasmus showed below-chance blind structure classification accuracy (0.15), and was most frequently mislabelled as parallelism
+- **Answer accuracy is very close across all conditions** — no condition meaningfully changes whether the model gets the right answer, which is expected: the rhetorical wrapping doesn't alter the underlying facts the model has access to. Notably, enumeratio and parallelism both edge above baseline on accuracy, which is a suggestive if not conclusive artifact.
+- **Enumeratio beats baseline on faithfulness** — the most interesting result in Part A. Forcing the model to number its reasoning steps appears to make those steps more logically connected to the final answer, even if the answer itself is no more likely to be correct. Explicit decomposition seems to tighten the reasoning chain.
+- Enumeratio produced the most structurally consistent outputs (judge correctly classified it most often). This is likely because numbered lists are an extremely common format in training data — the model has strong prior knowledge of what enumeratio looks like, making it easy to elicit reliably.
+- Chiasmus showed below-chance blind structure classification accuracy (0.15), and was most frequently mislabelled as parallelism. Antimetabole did not emerge as a distinct pattern either — outputs collapsed into generic parallel structure rather than anything resembling inversion. The structural demand of chiasmus (maintaining semantic inversion across a two-part argument) appears to exceed what a 7B model can reliably execute under a brief prompt instruction. The model defaults to the structurally simpler parallelism-like form.
 
 ![Structure Label Distributions](figures/partA/partA_structure_labels.png)
 
 ![Confusion Matrix](figures/partA/partA_structure_confusion_matrix.png)
 
-**Key finding:** Chiasmus could not be reliably elicited from a 7B model — outputs collapsed into parallelism-like structure. This is a behavioural failure but, as Experiment B shows, not a representational one.
+**Key finding:** Chiasmus could not be reliably elicited from a 7B model — outputs collapsed into parallelism-like structure. This is a behavioural failure but, as Experiment B shows, not a representational one. Enumeratio's advantage on faithfulness suggests that explicit sequential structure may genuinely scaffold reasoning quality, not just surface presentation.
 
 ---
 
