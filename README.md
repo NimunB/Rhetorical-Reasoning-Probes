@@ -23,6 +23,13 @@ Each StrategyQA question was run under four prompt conditions, asking the model 
 
 The four rhetorical devices span meaningfully different structural demands: **enumeratio** imposes sequential, explicit decomposition; **parison** imposes repeated grammatical structure across parallel clauses; **chiasmus** imposes mirrored or inverted structural relations across reasoning elements. Together they test whether different forms of structural constraint (sequential, syntactic, and chiastic/inversional) have different effects on reasoning.
 
+### Note on Rhetorical Terminology
+
+The rhetorical figures in this project are operationalised as prompt-level structural constraints rather than strict formal implementations from rhetorical theory. Tthe `parison` condition is intended to elicit repeated grammatical structure across clauses rather than stricter forms such as isocolon (same number of words or syllables). Likewise, the `chiasmus` condition is treated as a broad chiastic inversion prompt (A–B … B–A), potentially instantiating multiple members of the chiastic family — including antimetabole and antimetalepsis.
+
+Accordingly, the experiment should be interpreted as probing how different classes of structural rhetorical constraints affect reasoning behaviour and internal representations, rather than as a strict formal analysis of individual rhetorical figures.
+
+
 **Evaluation metrics:**
 - **Answer accuracy:** whether the final yes/no answer matches the gold label
 - **Faithfulness** (1-5): how well the reasoning chain actually supports and leads to the stated answer, as judged by Claude Haiku. A score of 1 means the reasoning is irrelevant or contradicts the answer; 5 means the reasoning fully and logically entails the answer. This captures reasoning quality independently of whether the answer happens to be correct.
