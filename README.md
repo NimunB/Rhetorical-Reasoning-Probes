@@ -30,7 +30,7 @@ The rhetorical figures in this project are operationalised as prompt-level struc
 Accordingly, the experiment should be interpreted as probing how different classes of structural rhetorical constraints affect reasoning behaviour and internal representations, rather than as a strict formal analysis of individual rhetorical figures.
 
 
-**Evaluation metrics:**
+### **Evaluation metrics:**
 - **Answer accuracy:** whether the final yes/no answer matches the gold label
 - **Faithfulness** (1-5): how well the reasoning chain actually supports and leads to the stated answer, as judged by Claude Haiku. A score of 1 means the reasoning is irrelevant or contradicts the answer; 5 means the reasoning fully and logically entails the answer. This captures reasoning quality independently of whether the answer happens to be correct.
 - **Blind 4-way structure classification:** the judge is shown only the reasoning trace (no prompt) and must identify which of the four rhetorical conditions produced it. High classification accuracy means the figure is legible in the output.
