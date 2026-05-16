@@ -14,14 +14,14 @@ StrategyQA was chosen because each question has a binary yes/no answer that requ
 
 Each StrategyQA question was run under four prompt conditions, asking the model to reason using a specific rhetorical figure:
 
-| Condition | Figure | Description |
-|---|---|---|
-| `baseline_cot` | - | Standard chain-of-thought |
-| `enumeratio` | Enumeratio | Explicitly numbered steps (1. 2. 3.) |
-| `parallelism` | Parison | Parallel phrases of equal grammatical structure |
-| `chiasmus` | Chiasmus + Antimetabole | Mirrored/inverted structure (A-B...B-A); we hoped antimetabole (word-level inversion, e.g. "not to live to eat, but eat to live") would emerge as a natural instantiation of the chiasmus prompt, since it is the most lexically recognisable member of that family |
+| Condition | Figure | Description | Prompt |
+|---|---|---|---|
+| `baseline_cot` | - | Standard chain-of-thought reasoning | "**Answer the question by thinking step by step.** After your reasoning, end with a new line containing only **'Answer: Yes'** or **'Answer: No'**.\n\nQuestion: {question}" |
+| `enumeratio` | Enumeratio | Explicitly numbered reasoning steps (1. 2. 3.) | "**Answer the question using numbered reasoning steps.** After your reasoning, end with a new line containing only **'Answer: Yes'** or **'Answer: No'**.\n\nQuestion: {question}" |
+| `parison` | Parison | Parallel clause structure with repeated grammatical form across reasoning steps | "**Answer the question using parallel sentence structures where possible, where each reasoning step follows the same grammatical form** (e.g. *'X is true because... Y is true because...'*). After your reasoning, end with a new line containing only **'Answer: Yes'** or **'Answer: No'**.\n\nQuestion: {question}" |
+| `chiasmus` | Chiastic inversion (family) | A–B … B–A reasoning structure; may realise multiple chiastic subtypes (e.g. antimetabole, antimetalepsis) depending on lexical realisation | "**Answer the question using a mirrored reasoning structure:** first introduce reasoning elements **A then B**, then resolve them in reverse order (**B then A**) to reach your conclusion. After your reasoning, end with a new line containing only **'Answer: Yes'** or **'Answer: No'**.\n\nQuestion: {question}" |
 
-The four rhetorical devices span meaningfully different structural demands: **enumeratio** imposes sequential, explicit decomposition; **parison** imposes grammatical symmetry across parallel clauses; **chiasmus/antimetabole** imposes semantic inversion and mirroring. Together they test whether structure at different linguistic levels (sequential, syntactic, semantic) has different effects on reasoning.
+The four rhetorical devices span meaningfully different structural demands: **enumeratio** imposes sequential, explicit decomposition; **parison** imposes grammatical symmetry across parallel clauses; **chiasmus** imposes semantic inversion and mirroring. Together they test whether structure at different linguistic levels (sequential, syntactic, semantic) has different effects on reasoning.
 
 **Evaluation metrics:**
 - **Answer accuracy:** whether the final yes/no answer matches the gold label
