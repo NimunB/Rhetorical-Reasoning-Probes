@@ -42,18 +42,18 @@ Accordingly, the experiment should be interpreted as probing how different class
 
 ![Part A Summary](figures/partA/partA_results_summary.png)
 
-- **Answer accuracy:** Enumeratio and parallelism both beat baseline on answer accuracy; chiasmus does not. Differences are small but consistent; the rhetorical framing does not change what facts the model knows, but the structure of the reasoning chain may marginally affect whether the right answer surfaces.
+- **Answer accuracy:** Enumeratio and parison both beat baseline on answer accuracy; chiasmus does not. Differences are small but consistent; the rhetorical framing does not change what facts the model knows, but the structure of the reasoning chain may marginally affect whether the right answer surfaces.
 - **Faithfulness:** Enumeratio beats baseline on faithfulness. Explicitly numbering reasoning steps appears to tighten the logical connection between the chain and the final answer, independent of whether that answer is correct.
-- **Blind structure classification:** Enumeratio is correctly identified at high rates; numbered lists are heavily represented in training data, so the model produces them reliably. Parallelism is identifiable but noisier. Chiasmus shows below-chance accuracy (0.15) and is most frequently mislabelled as parallelism; antimetabole did not emerge as a distinct pattern. Chiasmus's structural demand (maintaining semantic inversion across a two-part argument) appears to exceed what a 7B model can execute from a brief prompt instruction alone.
+- **Blind structure classification:** Enumeratio is correctly identified at high rates; numbered lists are heavily represented in training data, so the model produces them reliably. Parison is identifiable but noisier. Chiasmus shows below-chance accuracy (0.15) and is most frequently mislabelled as parison; antimetabole did not emerge as a distinct pattern. Chiasmus's structural demand (maintaining semantic inversion across a two-part argument) appears to exceed what a 7B model can execute from a brief prompt instruction alone.
 
 ![Structure Label Distributions](figures/partA/partA_structure_labels.png)
 
 ![Confusion Matrix](figures/partA/partA_structure_confusion_matrix.png)
 
 **Key findings:**
-- Enumeratio and parallelism beat baseline on accuracy; enumeratio additionally beats baseline on faithfulness, suggesting explicit decomposition modestly scaffolds reasoning quality.
+- Enumeratio and parison beat baseline on accuracy; enumeratio additionally beats baseline on faithfulness, suggesting explicit decomposition modestly scaffolds reasoning quality.
 - Chiasmus fails at the output level but not the representational level: the model cannot produce the structure, but Experiment B shows its activations are linearly separable from other conditions, meaning the model encodes the rhetorical intent internally even when it cannot execute it in output.
-- Parallelism sits between the two: structurally identifiable, small accuracy gain, no faithfulness gain.
+- Parison sits between the two: structurally identifiable, small accuracy gain, no faithfulness gain.
 
 ---
 
@@ -75,7 +75,7 @@ Layer-by-layer pattern:
 - **Layers 5-10 (sharp inflection):** The critical transition. This is where Llama-2's residual stream shifts from token/syntactic processing to semantic/task-level representations, the point where the model begins to "know" which rhetorical mode it's in.
 - **Layers 27-31 (~97%, near-flat):** The model has fully committed to the rhetorical mode internally. Small train/test gap throughout confirms the signal generalises and the probes are not overfitting.
 
-**Caveat:** This tells you the prompt *condition* is linearly encoded, not necessarily that distinct *rhetorical structures* are encoded. The four conditions are separable only if the model generates meaningfully different representations for each. For chiasmus, the blind judge results from Part A suggest the output structure collapsed into parallelism, so what the probe may be tracking is the chiasmus *prompt condition* rather than a true chiasmus representational geometry. The high probe accuracy for chiasmus is therefore consistent with two interpretations: the model has a genuine internal representation of chiasmus that it cannot execute, or the probe is picking up on prompt-level features that don't correspond to structural differences in the generated text.
+**Caveat:** This tells you the prompt *condition* is linearly encoded, not necessarily that distinct *rhetorical structures* are encoded. The four conditions are separable only if the model generates meaningfully different representations for each. For chiasmus, the blind judge results from Part A suggest the output structure collapsed into parison, so what the probe may be tracking is the chiasmus *prompt condition* rather than a true chiasmus representational geometry. The high probe accuracy for chiasmus is therefore consistent with two interpretations: the model has a genuine internal representation of chiasmus that it cannot execute, or the probe is picking up on prompt-level features that don't correspond to structural differences in the generated text.
 
 ![PCA of Hidden States](figures/partB/partB_pca.png)
 
@@ -104,7 +104,7 @@ Three controls were run to test whether probes detect genuine structure or surfa
 - Length-matched probes plateau at ~75% and go flat across all layers; length is a real but shallow confound, encoded early and not enriched by deeper processing
 - True structural signal lies somewhere between 75% (length-matched ceiling) and 97%, with the gap partly explained by surface confounds
 
-**Key finding:** The 97% probe accuracy is an upper bound on structural encoding. For enumeratio, the controls show the probe is largely tracking surface tokens (numbered markers) rather than abstract sequential reasoning. The representational dissociation for chiasmus (high probe accuracy, near-zero behavioural accuracy) is notable: the model encodes something distinct for the chiasmus condition internally, even when its outputs are indistinguishable from parallelism.
+**Key finding:** The 97% probe accuracy is an upper bound on structural encoding. For enumeratio, the controls show the probe is largely tracking surface tokens (numbered markers) rather than abstract sequential reasoning. The representational dissociation for chiasmus (high probe accuracy, near-zero behavioural accuracy) is notable: the model encodes something distinct for the chiasmus condition internally, even when its outputs are indistinguishable from parison.
 
 **If repeating this experiment:** Two controls would sharpen the interpretation considerably. First, masking ordered tokens *before* probe training (not just as a post-hoc ablation) would establish whether the structural signal survives without surface markers, i.e., whether there is any abstract sequential representation beyond the numbering tokens. Second, length-matching should be applied *upstream* as a data preprocessing step rather than as a separate control, to prevent length from being a confound in the primary probes at all. As run, length and structure are partially conflated, making it hard to isolate what the mid-layer probes are actually tracking.
 
@@ -127,10 +127,10 @@ Using direction vectors extracted from Part B probes, hidden states were steered
 ![Steering Results](figures/partC/partC_steering_results.png)
 
 **LR probe steering:**
-- **Parallelism at N=5 is a positive result:** accuracy improves from 0.65 to 0.70 and faithfulness from 2.90 to 3.10 over baseline, without parse failures. This is the clearest evidence across the whole experiment that activation steering can causally shift reasoning quality; pushing the model toward its parallelism representation produces measurably better outputs.
+- **Parison at N=5 is a positive result:** accuracy improves from 0.65 to 0.70 and faithfulness from 2.90 to 3.10 over baseline, without parse failures. This is the clearest evidence across the whole experiment that activation steering can causally shift reasoning quality; pushing the model toward its parison representation produces measurably better outputs.
 - Enumeratio accuracy declines monotonically as N increases; at N>=5, outputs collapse to a single answer line with no reasoning trace. Steering too hard destroys the generation.
 - Chiasmus is entirely unresponsive across all N; outputs remain identical enumerated responses regardless of steering strength, consistent with the collapsed chiasmus representation found in Part B.
-- No setting reliably increases blind structure classification accuracy for the target condition. Note: the blind classification judge itself is a weak signal here; as Part A showed, the judge struggles to distinguish parallelism and chiasmus, so a null result on this metric may reflect judge limitations rather than true structural stasis.
+- No setting reliably increases blind structure classification accuracy for the target condition. Note: the blind classification judge itself is a weak signal here; as Part A showed, the judge struggles to distinguish parison and chiasmus, so a null result on this metric may reflect judge limitations rather than true structural stasis.
 
 **CAA steering:**
 - All CAA settings produced 100% parse failures; outputs degenerated into single-token repetition ("mirror mirror mirror..." for chiasmus, "Post Post Post..." for enumeratio)
@@ -147,7 +147,7 @@ Using direction vectors extracted from Part B probes, hidden states were steered
 | lr_probe N=7 | 0.113 | "mirrored" begins appearing but recall very low |
 | lr_probe N=9 | 0.190 | No consistent improvement |
 
-**Key finding:** Parallelism steering at N=5 produces a genuine improvement in accuracy and faithfulness, proof of concept that activation steering can causally influence reasoning quality via rhetorical direction vectors. Beyond this, LR probe steering has limited causal influence: probe directions encode a correlate of the rhetorical condition but not the full generative mechanism. CAA is too aggressive at all tested strengths and degenerates into token repetition; it requires magnitude normalisation before further use.
+**Key finding:** Parison steering at N=5 produces a genuine improvement in accuracy and faithfulness, proof of concept that activation steering can causally influence reasoning quality via rhetorical direction vectors. Beyond this, LR probe steering has limited causal influence: probe directions encode a correlate of the rhetorical condition but not the full generative mechanism. CAA is too aggressive at all tested strengths and degenerates into token repetition; it requires magnitude normalisation before further use.
 
 ---
 
@@ -155,7 +155,7 @@ Using direction vectors extracted from Part B probes, hidden states were steered
 
 Across three experiments, a consistent picture emerges:
 
-| | Enumeratio | Parallelism | Chiasmus |
+| | Enumeratio | Parison | Chiasmus |
 |---|---|---|---|
 | Beats baseline on accuracy | Yes (small) | Yes (small) | No |
 | Beats baseline on faithfulness | Yes | No | No |
@@ -163,7 +163,7 @@ Across three experiments, a consistent picture emerges:
 | Linearly separable in activations | Yes (surface-driven) | Yes | Yes (despite output failure) |
 | Causally steerable | Fragile (collapses at N>=5) | Yes, at N=5 | No |
 
-**The headline result is that rhetorical figures can scaffold and causally improve reasoning quality.** Enumeratio beats baseline on faithfulness via prompting alone; parallelism beats baseline on both accuracy and faithfulness when activations are steered toward its internal representation. These are small effects on a toy dataset, but they are consistent and directional. The steering result in particular is a proof of concept that the internal representations of rhetorical figures are causally connected to output quality.
+**The headline result is that rhetorical figures can scaffold and causally improve reasoning quality.** Enumeratio beats baseline on faithfulness via prompting alone; parison beats baseline on both accuracy and faithfulness when activations are steered toward its internal representation. These are small effects on a toy dataset, but they are consistent and directional. The steering result in particular is a proof of concept that the internal representations of rhetorical figures are causally connected to output quality.
 
 **The chiasmus result is a useful negative.** It shows the approach has limits: figures the model cannot reliably produce also cannot be steered into, even when they are linearly separable in activation space. This sets a boundary condition; elicitability in output appears to be a prerequisite for causal steerability.
 
@@ -176,7 +176,7 @@ Across three experiments, a consistent picture emerges:
 - **Larger dataset:** 200 questions is a toy-scale experiment. A larger sample would tighten confidence intervals and allow per-figure accuracy breakdowns.
 - **Upstream length control:** Length-match across conditions *before* probe training, not as a post-hoc control. This would prevent length from confounding the primary probe signal.
 - **Upstream token masking:** Mask ordered tokens (1. 2. 3.) before probe training to establish whether any abstract sequential representation exists beyond surface markers.
-- **Better blind structure judge for Part C:** The current judge conflates chiasmus and parallelism, making blind classification a weak evaluation signal for steering experiments. A more constrained judge rubric or a separate judge per figure would give cleaner signal on whether steering actually shifts output structure.
+- **Better blind structure judge for Part C:** The current judge conflates chiasmus and parison, making blind classification a weak evaluation signal for steering experiments. A more constrained judge rubric or a separate judge per figure would give cleaner signal on whether steering actually shifts output structure.
 
 ---
 
