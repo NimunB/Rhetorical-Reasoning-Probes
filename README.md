@@ -25,7 +25,7 @@ The four rhetorical devices span meaningfully different structural demands: **en
 
 ### Note on Rhetorical Terminology
 
-The rhetorical figures in this project are operationalised as prompt-level structural constraints rather than strict formal implementations from rhetorical theory. Tthe `parison` condition is intended to elicit repeated grammatical structure across clauses rather than stricter forms such as isocolon (same number of words or syllables). Likewise, the `chiasmus` condition is treated as a broad chiastic inversion prompt (A–B … B–A), potentially instantiating multiple members of the chiastic family — including antimetabole and antimetalepsis.
+The rhetorical figures in this project are operationalised as prompt-level structural constraints rather than strict formal implementations from rhetorical theory. The `parison` condition is intended to elicit repeated grammatical structure across clauses rather than stricter forms such as isocolon (same number of words or syllables). Likewise, the `chiasmus` condition is treated as a broad chiastic inversion prompt (A–B … B–A), potentially instantiating multiple members of the chiastic family — including antimetabole and antimetalepsis.
 
 Accordingly, the experiment should be interpreted as probing how different classes of structural rhetorical constraints affect reasoning behaviour and internal representations, rather than as a strict formal analysis of individual rhetorical figures.
 
