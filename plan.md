@@ -27,6 +27,32 @@
 
 ---
 
+### Harris (2022c) — "Chiastic Iconicity: Refiguring Symmetry," in *Iconicity in Cognition and across Semiotic Systems* (John Benjamins). DOI: 10.1075/ill.18.06har
+
+**Core argument:** Chiastic structure (ABBA) operates through three Peircean iconicity principles — identity, sequential order, and quantity — which combine to produce consolidated iconicities of harmonious balance and cyclicity. The paper's central claim is that the aesthetic and argumentative effects of chiasmus arise not from the ABBA pattern alone, but from its convergence with other rhetorical figures (parison, mesodiplosis, isocolon) and grammatical features.
+
+**Chiasmus vs. antimetabole:**
+- Chiasmus = the broad ABBA family, realizable at any linguistic level (sound, word, phrase, clause, narrative)
+- Antimetabole = the *lexical subset*: the same words repeated in inverse order. Every antimetabole is chiastic; not every chiasmus is antimetabolic.
+- This distinction is why our chiasmus prompt (broad A-B-B-A instruction) was designed to admit antimetabole as its most tractable realisation.
+
+**The four communicative functions (from this paper specifically):**
+- *Comprehensiveness* — AB and BA are mutually exclusive and exhaustive; the form enacts logical closure ("having a solution" vs. "comprehending the problem" — you cannot have both). Scaffolds binary, exhaustive reasoning.
+- *Irrelevance of Order/Rank* — the chiastic commutation declares A and B equivalent regardless of order (x+y = y+x). Scaffolds equivalence reasoning.
+- *Reciprocal Specification* — A and B mutually define each other ("life is the germ and the germ is life"). Scaffolds mutually constitutive reasoning.
+- *Reciprocal Energy* — A and B exert bidirectional force or agency on each other ("women are changing universities and universities are changing women"). Scaffolds causal feedback reasoning. Represented not as static balance but as "point balance" — dynamic, circular.
+
+**Key insight on figural convergence:** The effects attributed to chiasmus alone are almost always produced by a *bundle* of figures simultaneously — chiasmus + parison + mesodiplosis + isocolon. "Figures combine. But figural collocations are crucial for understanding iconicity, and the effects ascribed regularly to one single figure are very often the combined effects of figural convergence." This explains why our 7B model couldn't produce chiasmus: generating the full figural bundle from a brief prompt is far harder than generating any single figure.
+
+**The rhyme-as-reason effect:** Harris cites empirical evidence that people judge formally similar statements (rhyming, alliterating, isocolonic) as more accurate and credible than paraphrases. "One could not ask for a clearer experimental confirmation that form-enacted meanings have rhetorical effects." This supports the hypothesis that LLMs trained on such text may have acquired form-validity associations.
+
+**Call for corpus/computational research (p. 129):** "If the iconicity claims about figural convergence, grammatical-feature cooccurrence, and form/function correspondences advanced in this essay are to grow into powerfully generalizable results... we will need serious corpus research to test them." — directly motivates our project.
+
+**Most citable quote for our project:**
+> "Chiastic structure (ABBA) leverages the iconicity principles of identity, sequential order, and quantity for consolidated iconicities of harmonious balance and cyclicity." (abstract, p. 103)
+
+---
+
 ### Fahnestock (2003) — "Verbal and Visual Parallelism," *Written Communication*, 20(2), 123–152
 
 **Core argument:** Parallelism is not a stylistic ornament but a constitutive argumentative device that *epitomizes* a claim. The parallel form itself groups examples into a unified set and performs an inferential move.
