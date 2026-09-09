@@ -1,5 +1,7 @@
 # Rhetorical Reasoning Probes
 
+Presented at the Rhetoricon Symposium, 2026. Link to Poster [here](poster.pdf) and LinkedIn post [here](https://www.linkedin.com/posts/activity-7472691028030840833-qceG).
+
 An investigation into whether constraining LLM outputs to classical rhetorical figures improves reasoning performance, whether these structures are encoded in activation space, and whether they can be causally steered.
 
 **Model:** Llama-2-7b-chat-hf  
